@@ -1,11 +1,11 @@
-async function connect(){
+const { Pool } = require("pg");
+const pool = new Pool({
+    connectionString: process.env.CONNECTION_STRING
+});
 
+async function connect(){
     if (global.connection)
-        return global.connection.conect();
-    const { Pool } = require("pg");
-    const pool = new Pool({
-        connectionString: process.env.CONNECTION_STRING
-    });
+        return global.connection.connect();
 
     const client = await pool.connect();
     console.log("Criou o pool de conexão")
@@ -27,6 +27,7 @@ async function selectCustomer(id){
 }
 
 module.exports = {
-    selectCustomer
+    selectCustomer,
+    pool
 }
 
